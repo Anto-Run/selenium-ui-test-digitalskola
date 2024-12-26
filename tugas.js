@@ -13,12 +13,12 @@ async function sauceDemoTest() {
 
             //Input Username
             await driver.findElement(By.id('user-name')).sendKeys('standard_user');
-
+            
             //Input Password
-            await driver.findElement(By.css('input[placeholder="Password"]')).sendKeys('secret_sauce');
+            await driver.findElement(By.id('password')).sendKeys('secret_sauce');
 
             //click button login
-            await driver.findElement(By.css('input[value="Login"]')).click();
+            await driver.findElement(By.id('login-button')).click();
 
             //Verify Login
             let titleText = await driver.findElement(By.xpath("//div[@class='app_logo']")).getText();
