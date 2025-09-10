@@ -1,8 +1,13 @@
 {
+  "name": "docker-mount-demo",
+  "version": "1.0.0",
+  "main": "server.js",
   "dependencies": {
     "dotenv": "^16.4.7",
-    "selenium-webdriver": "^4.27.0"
+    "selenium-webdriver": "^4.27.0",
+    "express": "^4.18.2"
   },
+  
   "scripts": {
     "test": "mocha 'test/**/*.js'",
     "test-regression": "mocha --grep '#Regression'",
