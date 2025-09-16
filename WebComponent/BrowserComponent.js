@@ -1,43 +1,58 @@
-const { Builder } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
-const firefox = require('selenium-webdriver/firefox');
-const edge = require('selenium-webdriver/edge');
+import { Builder } from "selenium-webdriver";
+import chrome from "selenium-webdriver/chrome.js";
+import firefox from "selenium-webdriver/firefox.js";
+import edge from "selenium-webdriver/edge.js";
 
-class BrowserComponent {
-
+export default class BrowserComponent {
     async browserPlatform(browser) {
         let options;
         let driver;
 
         switch (browser.toLowerCase()) {
-            case 'firefox-headless':
+            case "firefox-headless":
                 options = new firefox.Options();
-                options.addArguments('--headless');
-                driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options).build();
+                options.addArguments("--headless");
+                driver = await new Builder()
+                    .forBrowser("firefox")
+                    .setFirefoxOptions(options)
+                    .build();
                 break;
-            case 'firefox':
+
+            case "firefox":
                 options = new firefox.Options();
-                driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options).build();
+                driver = await new Builder()
+                    .forBrowser("firefox")
+                    .setFirefoxOptions(options)
+                    .build();
                 break;
-            case 'chrome-headless':
+
+            case "chrome-headless":
                 options = new chrome.Options();
-                options.addArguments('--headless');
-                driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
+                options.addArguments("--headless");
+                driver = await new Builder()
+                    .forBrowser("chrome")
+                    .setChromeOptions(options)
+                    .build();
                 break;
-            case 'chrome':
+
+            case "chrome":
                 options = new chrome.Options();
-                driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
+                driver = await new Builder()
+                    .forBrowser("chrome")
+                    .setChromeOptions(options)
+                    .build();
                 break;
+
             default:
                 console.log("Chrome browser selected");
                 options = new chrome.Options();
-                driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
+                driver = await new Builder()
+                    .forBrowser("chrome")
+                    .setChromeOptions(options)
+                    .build();
                 break;
         }
 
-        // Mengembalikan driver untuk digunakan
         return driver;
     }
 }
-
-module.exports = BrowserComponent;

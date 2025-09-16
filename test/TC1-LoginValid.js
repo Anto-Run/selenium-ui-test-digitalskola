@@ -1,11 +1,15 @@
-const { Builder } = require('selenium-webdriver');
-const LoginPage = require('../WebComponent/LoginPage.js');
-const DashboardPage = require('../WebComponent/DashboardPage.js');
-const BrowserComponent = require('../WebComponent/BrowserComponent.js');
-const assert = require('assert');
-const fs = require('fs');
-require('dotenv').config();
+import chrome from "selenium-webdriver/chrome.js";
+import { Builder } from "selenium-webdriver";
+import { expect } from "chai";
+import assert from "assert";
+import fs from "fs";
+import dotenv from "dotenv";
 
+import LoginPage from "../WebComponent/LoginPage.js";
+import DashboardPage from "../WebComponent/DashboardPage.js";
+import BrowserComponent from "../WebComponent/BrowserComponent.js";
+
+dotenv.config();
 
 const browser = process.env.BROWSER;
 const baseUrl = process.env.BASE_URL;
@@ -17,19 +21,24 @@ if (!fs.existsSync(screenshotDir)) {
     fs.mkdirSync(screenshotDir, { recursive: true });
 }
 
-
 describe('Login with valid Credentials #Login #Regression #Smoke', function () {
-
     this.timeout(40000);
     let driver;
 
     before(async function () {
-        console.log(`Platform Browser : ${browser}`);
-        const browserComponent = new BrowserComponent(driver);
-        driver = await browserComponent.browserPlatform(browser);
+        const options = new chrome.Options()
+            .addArguments("--headless")
+            .addArguments("--no-sandbox")
+            .addArguments("--disable-dev-shm-usage")
+            .addArguments("--disable-gpu")
+            .addArguments("--remote-debugging-port=9222")
+            .addArguments("--user-data-dir=/tmp/chrome-profile-" + Date.now());
 
+        driver = await new Builder()
+            .forBrowser('chrome')
+            .setChromeOptions(options)
+            .build();
     });
-
 
     beforeEach(async function () {
         const loginPage = new LoginPage(driver);
@@ -46,13 +55,11 @@ describe('Login with valid Credentials #Login #Regression #Smoke', function () {
     afterEach(async function () {
         console.log('Taking screenshot...');
         const screenshot = await driver.takeScreenshot();
-        const filepath = `${screenshotDir}${this.currentTest.title.replace(/\s+/g, '_')}_${Date.now()}.png`
+        const filepath = `${screenshotDir}${this.currentTest.title.replace(/\s+/g, '_')}_${Date.now()}.png`;
         fs.writeFileSync(filepath, screenshot, 'base64');
     });
 
     after(async function () {
         await driver.quit();
-
     });
-
 });

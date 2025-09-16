@@ -1,13 +1,15 @@
 {
   "name": "docker-mount-demo",
   "version": "1.0.0",
+  "type": "module",
   "main": "server.js",
   "dependencies": {
+    "chai": "^5.0.0",
     "dotenv": "^16.4.7",
+    "express": "^4.18.2",
     "selenium-webdriver": "^4.27.0",
-    "express": "^4.18.2"
+    "test": "^3.3.0"
   },
-  
   "scripts": {
     "test": "mocha 'test/**/*.js'",
     "test-regression": "mocha --grep '#Regression'",
@@ -15,5 +17,8 @@
     "test-login": "mocha --grep '#Login'",
     "test-cart": "mocha --grep '#Cart'",
     "test-checkout": "mocha --grep '#Checkout'"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
   }
 }
