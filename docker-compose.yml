@@ -18,6 +18,6 @@ services:
       - .env
     environment:
     - BROWSER=${BROWSER:-chrome}
-    - BASE_URL=${BASE_URL:-http://localhost:3000}
+    - BASE_URL=${BASE_URL:-https://saucedemo.com}
     - USER_NAME=${USER_NAME:-standard_user}
     - PASSWORD=${PASSWORD:-secret_sauce}
