@@ -7,17 +7,18 @@ services:
       dockerfile: Dockerfile
     working_dir: /app
     volumes:
-      - .:/app
-      # Kalau node_modules sering bikin conflict di host ↔ container,
-      # bisa pakai anonymous volume biar bersih
-      - /app/node_modules
+      - /c/jenkins_temp_build:/app:cached
+      - node_modules:/app/node_modules
     command: sh -lc "npm install && npm test"
     tty: true
     stdin_open: true
     env_file:
       - .env
     environment:
-    - BROWSER=${BROWSER:-chrome}
-    - BASE_URL=${BASE_URL:-https://saucedemo.com}
-    - USER_NAME=${USER_NAME:-standard_user}
-    - PASSWORD=${PASSWORD:-secret_sauce}
+      - BROWSER=${BROWSER:-chrome}
+      - BASE_URL=${BASE_URL:-https://saucedemo.com}
+      - USER_NAME=${USER_NAME:-standard_user}
+      - PASSWORD=${PASSWORD:-secret_sauce}
+
+volumes:
+  node_modules:
